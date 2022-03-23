@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textHello, textMean;
     EditText editTextName;
 
+    // vi skapar en array med lite data att testa med
     double[] testdata = { 3.0, 5.2, 6.0, 4.0, 2.0, 4.3, 5.0, 7.0, 8.0 };
 
     @Override
@@ -25,21 +26,21 @@ public class MainActivity extends AppCompatActivity {
         textMean = findViewById(R.id.textViewMean);
         editTextName = findViewById(R.id.editTextName);
 
-        //textHello.setText("Hello from MainActivity!");
     }
 
     public void btnClick(View view) {
-        //String name = editTextName.getText().toString();
-        textHello.setText(
-            String.format("Hello %s the number is %d",
-                editTextName.getText(),
-                5
-            )
+        // Med String.format() kan vi kombinena text med värden av olika datatyp (%s = str, %d = digit)
+        String helloName = String.format("Hello %s the number is %d",
+            editTextName.getText(),
+            5
         );
+
+        textHello.setText(helloName);
     }
 
     public void calculate(View view) {
 
+        // %.2f i String.format() avrundar till två decimaler
         String meanStr = String.format("mean: %.2f",
                 Statistics.calcMean(testdata)
         );
