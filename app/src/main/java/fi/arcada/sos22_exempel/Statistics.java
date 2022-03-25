@@ -54,7 +54,7 @@ public class Statistics {
         double median;
         if (sorted.size() % 2 == 0) {
             // Om antalet är jämnt, ta medelvärdet av de två mittersta
-            median = sorted.get(mid-1) + sorted.get(mid) / 2;
+            median = (sorted.get(mid-1) + sorted.get(mid)) / 2;
         } else {
             // Om antalet är udda, ta det mittersta värdet
             median = sorted.get(mid);
