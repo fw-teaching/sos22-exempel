@@ -39,13 +39,23 @@
         app:layout_constraintTop_toTopOf="@+id/editTextName" />
 
     <TextView
-        android:id="@+id/textViewMean"
-        android:layout_width="219dp"
-        android:layout_height="144dp"
-        android:layout_marginStart="16dp"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Medelvärde:"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <TextView
+        android:id="@+id/textViewMean"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <Button
         android:id="@+id/button"
@@ -56,15 +66,5 @@
         android:text="Räkna"
         app:layout_constraintStart_toStartOf="@+id/helloText"
         app:layout_constraintTop_toBottomOf="@+id/helloText" />
-
-    <TextView
-        android:id="@+id/datasetOut"
-        android:layout_width="358dp"
-        android:layout_height="174dp"
-        android:layout_marginBottom="48dp"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
