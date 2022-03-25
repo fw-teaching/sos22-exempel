@@ -15,14 +15,11 @@ public class MainActivity extends AppCompatActivity {
     // deklarera variabler
     TextView textHello, textMean, textDataOut;
     EditText editTextName;
-    // Vi skapar en arraylist för vår datamängd
 
+    // Vi skapar en arraylist för vår datamängd
     ArrayList<Double> dataset = new ArrayList<>();
     ArrayList<DataItem> dataItems = new ArrayList<>();
 
-
-    // vi skapar en array med lite data att testa med
-    double[] testdata = { 3.0, 5.2, 6.0, 4.0, 2.0, 4.3, 5.0, 7.0, 8.0, 7.3 };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
         textDataOut = findViewById(R.id.datasetOut);
         editTextName = findViewById(R.id.editTextName);
 
-        dataItems = Statistics.getSampleDataset();
-        dataset = Statistics.getDataValues(dataItems);
-
+        dataItems = Statistics.getSampleDataset(); // ArrayList med testdata (flera DataItem-objekt)
+        dataset = Statistics.getDataValues(dataItems); // ArrayList med DataItem-objektens värden
 
         // Vi skriver tillfälligt ut vår datamängd
         String dataOut = "";
@@ -51,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
             dataOut += item.getName() + ":" + item.getValue() + " ";
         }
         textDataOut.setText(dataOut);
-
-        DataItem kalle = new DataItem("Kalle", 12);
-        DataItem lisa = new DataItem("Lisa", 13);
 
     }
 

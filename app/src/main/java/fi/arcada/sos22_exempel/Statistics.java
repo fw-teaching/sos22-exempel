@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class Statistics {
 
+    // Metod för att generera en datamängd att testa med
     public static ArrayList<DataItem> getSampleDataset() {
         Random rnd = new Random();
 
@@ -20,7 +21,9 @@ public class Statistics {
 
     // Metod för att skapa skild ArrayList med endast värdena från DataItems
     public static ArrayList<Double> getDataValues(ArrayList<DataItem> dataItems) {
+        // Skapa ny arraylist för Double-värden
         ArrayList<Double> dataValues = new ArrayList<>();
+        // Loopa igenom dataItems och spara endast värdena i den nya arrayListen
         for (DataItem item: dataItems) {
             dataValues.add(item.getValue());
         }
@@ -35,14 +38,12 @@ public class Statistics {
         return sorted;
     }
 
-    // Statisk metod som kan köras utan att skapa ett klassobjekt
+    // Medelvärde
     public static double calcMean(ArrayList<Double> dataset) {
-
         double sum = 0;
         for (int i = 0; i < dataset.size(); i++) {
             sum += dataset.get(i);
         }
-
         return sum / dataset.size();
     }
 
@@ -71,8 +72,10 @@ public class Statistics {
             // Summan av de enskilda skillnaderna i kvadrat
             sumDiff += Math.pow(dataVal-avg,2);
         }
-
-        return Math.sqrt(sumDiff / dataset.size());
+        // Dela summan med antalet värden (räkna ut variansen)
+        double variance = sumDiff / dataset.size();
+        // Till sist, ta roten av variansen och returnera
+        return Math.sqrt(variance);
 
     }
 }
