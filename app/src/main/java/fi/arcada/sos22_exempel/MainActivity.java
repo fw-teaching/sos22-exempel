@@ -16,7 +16,10 @@ public class MainActivity extends AppCompatActivity {
     TextView textHello, textMean, textDataOut;
     EditText editTextName;
     // Vi skapar en arraylist för vår datamängd
+
     ArrayList<Double> dataset = new ArrayList<>();
+    ArrayList<DataItem> dataItems = new ArrayList<>();
+
 
     // vi skapar en array med lite data att testa med
     double[] testdata = { 3.0, 5.2, 6.0, 4.0, 2.0, 4.3, 5.0, 7.0, 8.0, 7.3 };
@@ -32,10 +35,9 @@ public class MainActivity extends AppCompatActivity {
         textDataOut = findViewById(R.id.datasetOut);
         editTextName = findViewById(R.id.editTextName);
 
-        for (int i = 0; i < testdata.length; i++) {
-            // Vi lägger till testdata i vår ArrayList
-            dataset.add(testdata[i]);
-        }
+        dataItems = Statistics.getSampleDataset();
+        dataset = Statistics.getDataValues(dataItems);
+
 
         // Vi skriver tillfälligt ut vår datamängd
         String dataOut = "";
@@ -43,6 +45,15 @@ public class MainActivity extends AppCompatActivity {
             dataOut += number + " ";
         }
         textDataOut.setText(dataOut);
+        // Vi skriver ut DataItem-datamängden
+        dataOut += "\n----\n";
+        for (DataItem item: dataItems) {
+            dataOut += item.getName() + ":" + item.getValue() + " ";
+        }
+        textDataOut.setText(dataOut);
+
+        DataItem kalle = new DataItem("Kalle", 12);
+        DataItem lisa = new DataItem("Lisa", 13);
 
     }
 

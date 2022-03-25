@@ -2,8 +2,30 @@ package fi.arcada.sos22_exempel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Statistics {
+
+    public static ArrayList<DataItem> getSampleDataset() {
+        Random rnd = new Random();
+
+        ArrayList<DataItem> sampleData = new ArrayList<>();
+        String[] names = { "Fili", "Kili", "Balin", "Dwalin", "Ori", "Nori", "Dori", "Gloin", "Oin", "Bifur", "Bofur", "Bombur", "Thorin" };
+
+        for (String name: names) {
+            sampleData.add(new DataItem(name, rnd.nextInt(300)+100));
+        }
+        return sampleData;
+    }
+
+    // Metod för att skapa skild ArrayList med endast värdena från DataItems
+    public static ArrayList<Double> getDataValues(ArrayList<DataItem> dataItems) {
+        ArrayList<Double> dataValues = new ArrayList<>();
+        for (DataItem item: dataItems) {
+            dataValues.add(item.getValue());
+        }
+        return dataValues;
+    }
 
     // Sorteringsmetod att användas i andra metoder
     public static ArrayList<Double> getSorted(ArrayList<Double> dataset) {

@@ -59,8 +59,8 @@
 
     <TextView
         android:id="@+id/datasetOut"
-        android:layout_width="358dp"
-        android:layout_height="174dp"
+        android:layout_width="362dp"
+        android:layout_height="267dp"
         android:layout_marginBottom="48dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
