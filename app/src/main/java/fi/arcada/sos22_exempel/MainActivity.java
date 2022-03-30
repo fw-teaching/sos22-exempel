@@ -38,9 +38,10 @@ public class MainActivity extends AppCompatActivity {
         // Vi skriver tillfälligt ut vår datamängd
         String dataOut = "";
         for (double number: dataset) {
-            dataOut += number + " ";
+            dataOut += number + ", ";
         }
         textDataOut.setText(dataOut);
+        System.out.println(dataOut);
         // Vi skriver ut DataItem-datamängden
         dataOut += "\n----\n";
         for (DataItem item: dataItems) {
@@ -63,10 +64,11 @@ public class MainActivity extends AppCompatActivity {
     public void calculate(View view) {
 
         // %.2f i String.format() avrundar till två decimaler
-        String meanStr = String.format("Medelvärde: %.2f\n Median: %.2f\nStd.avvikelse: %.2f",
+        String meanStr = String.format("Medelvärde: %.2f\n Median: %.2f\nStd.avvikelse: %.2f\nTypvärde: %.2f",
                 Statistics.calcMean(dataset),
                 Statistics.calcMedian(dataset),
-                Statistics.calcSD(dataset)
+                Statistics.calcSD(dataset),
+                Statistics.calcMode(dataset)
         );
 
         textMean.setText(meanStr);

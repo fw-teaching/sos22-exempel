@@ -2,6 +2,7 @@ package fi.arcada.sos22_exempel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Statistics {
@@ -12,9 +13,11 @@ public class Statistics {
 
         ArrayList<DataItem> sampleData = new ArrayList<>();
         String[] names = { "Fili", "Kili", "Balin", "Dwalin", "Ori", "Nori", "Dori", "Gloin", "Oin", "Bifur", "Bofur", "Bombur", "Thorin" };
+        double[] ages = { 268.0, 194.0, 364.0, 316.0, 328.0, 194.0, 316.0, 193.0, 298.0, 316.0, 161.0, 276.0, 230.0 };
 
-        for (String name: names) {
-            sampleData.add(new DataItem(name, rnd.nextInt(300)+100));
+        for (int i = 0; i < names.length; i++) {
+            //sampleData.add(new DataItem(name, rnd.nextInt(300)+100));
+            sampleData.add(new DataItem(names[i], ages[i]));
         }
         return sampleData;
     }
@@ -76,6 +79,40 @@ public class Statistics {
         double variance = sumDiff / dataset.size();
         // Till sist, ta roten av variansen och returnera
         return Math.sqrt(variance);
+
+    }
+
+    // Typvärde (eng. mode)
+    public static double calcMode(ArrayList<Double> dataset) {
+        HashMap<Double, Integer> valueCount = new HashMap<>();
+
+
+        for (double dataValue: dataset) {
+            Integer count = valueCount.get(dataValue);
+
+            if (count == null)  count = 0;
+
+            valueCount.put(dataValue, count+1);
+            //valueCount.put(dataValue, (count == null ? 0 : count) + 1);
+
+            /* JSON-aktigt resultat
+                {   268.0: 1,  316.0, 3 ...
+             */
+        }
+        int maxCount = 0;
+        double modeValue = 0.0;
+
+        // Enklast att loopa HashMap med keyset()
+        for (Double dataValue: valueCount.keySet()) {
+            Integer curCount = valueCount.get(dataValue);
+
+            // Om det nuvarande värdet är högre än det senast funna högsta värdet
+            if (curCount > maxCount) {
+                maxCount = curCount;
+                modeValue = dataValue;
+            }
+        }
+        return modeValue;
 
     }
 }
