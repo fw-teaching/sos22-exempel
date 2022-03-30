@@ -15,15 +15,13 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     // deklarera variabler
-    TextView textHello, textMean, textDataOut;
-    EditText editTextName;
-    EditText editValue;
+    TextView textMean, textDataOut;
+    EditText editTextName, editValue;
     RecyclerView recyclerView;
 
     // Vi skapar en arraylist för vår datamängd
     ArrayList<Double> dataset = new ArrayList<>();
     ArrayList<DataItem> dataItems = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +35,17 @@ public class MainActivity extends AppCompatActivity {
         editValue = findViewById(R.id.editValue);
         recyclerView = findViewById(R.id.datasetRecyclerView);
 
-        //dataItems = Statistics.getSampleDataset(); // ArrayList med testdata (flera DataItem-objekt)
+        // Un-commenta denna rad om du behöver ett test-dataset
+        // dataItems = Statistics.getSampleDataset(); // ArrayList med testdata (flera DataItem-objekt)
 
         DatasetViewAdapter adapter = new DatasetViewAdapter(dataItems, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         dataset = Statistics.getDataValues(dataItems); // ArrayList med DataItem-objektens värden
 
         // Vi skriver tillfälligt ut vår datamängd
         String dataOut = "";
-        /*for (double number: dataset) {
-            dataOut += number + ", ";
-        }
-        textDataOut.setText(dataOut);
-        System.out.println(dataOut); */
         // Vi skriver ut DataItem-datamängden
         for (DataItem item: dataItems) {
             dataOut += item.getName() + ":" + item.getValue() + " ";
@@ -62,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnClick(View view) {
-        // Med String.format() kan vi kombinena text med värden av olika datatyp (%s = str, %d = digit)
+        // För att få den inmatade texten till en double måste vi konvertera med parseDouble()
         double value = Double.parseDouble(editValue.getText().toString());
+        // Sedan skapar vi ett nytt DataIte-objekt och lägger till vår ArrayList
         dataItems.add(new DataItem(editTextName.getText().toString(), value));
     }
 
