@@ -22,6 +22,8 @@ public class Statistics {
         return sampleData;
     }
 
+
+
     // Metod för att skapa skild ArrayList med endast värdena från DataItems
     public static ArrayList<Double> getDataValues(ArrayList<DataItem> dataItems) {
         // Skapa ny arraylist för Double-värden
@@ -39,6 +41,18 @@ public class Statistics {
         ArrayList<Double> sorted = new ArrayList<>(dataset);
         Collections.sort(sorted);
         return sorted;
+    }
+
+    // min
+    public static double getMin(ArrayList<DataItem> dataItems) {
+        // Första värdet i vår sorterade arrayList
+        return getSorted(getDataValues(dataItems)).get(0);
+    }
+
+    // max
+    public static double getMax(ArrayList<DataItem> dataItems) {
+        // sista värdet i vår sorterade arrayList
+        return getSorted(getDataValues(dataItems)).get(dataItems.size()-1);
     }
 
     // Medelvärde
@@ -90,12 +104,13 @@ public class Statistics {
         for (double dataValue: dataset) {
             Integer count = valueCount.get(dataValue);
 
+            // Om vi inte tidigare räknat detta värde, sätt det till 0
             if (count == null)  count = 0;
-
+            // Öka counten för detta värde med 1
             valueCount.put(dataValue, count+1);
             //valueCount.put(dataValue, (count == null ? 0 : count) + 1);
 
-            /* JSON-aktigt resultat
+            /* Om vi tänker JSON skulle det se ut så här (fast vi ju inte får ha double som nycklar...)
                 {   268.0: 1,  316.0, 3 ...
              */
         }
