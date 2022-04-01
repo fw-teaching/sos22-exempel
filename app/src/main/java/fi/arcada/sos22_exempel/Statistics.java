@@ -100,7 +100,6 @@ public class Statistics {
     public static double calcMode(ArrayList<Double> dataset) {
         HashMap<Double, Integer> valueCount = new HashMap<>();
 
-
         for (double dataValue: dataset) {
             Integer count = valueCount.get(dataValue);
 
