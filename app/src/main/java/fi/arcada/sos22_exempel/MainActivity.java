@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.datasetRecyclerView);
 
         // Un-commenta denna rad om du behöver ett test-dataset
-        // dataItems = Statistics.getSampleDataset(); // ArrayList med testdata (flera DataItem-objekt)
+        dataItems = Statistics.getSampleDataset(); // ArrayList med testdata (flera DataItem-objekt)
 
         DatasetViewAdapter adapter = new DatasetViewAdapter(dataItems, this);
         recyclerView.setAdapter(adapter);
@@ -66,11 +66,14 @@ public class MainActivity extends AppCompatActivity {
         dataset = Statistics.getDataValues(dataItems);
 
         // %.2f i String.format() avrundar till två decimaler
-        String meanStr = String.format("Medelvärde: %.2f\n Median: %.2f\nStd.avvikelse: %.2f\nTypvärde: %.2f",
-                Statistics.calcMean(dataset),
-                Statistics.calcMedian(dataset),
-                Statistics.calcSD(dataset),
-                Statistics.calcMode(dataset)
+        String meanStr = String.format("%s: %.2f\n %s: %.2f\n%s: %.2f\n%s: %.2f\n%s:%.2f\n%s: %.2f",
+                "Medelvärde", Statistics.calcMean(dataset),
+                "Median", Statistics.calcMedian(dataset),
+                "Std.avvikelse", Statistics.calcSD(dataset),
+                "Typvärde", Statistics.calcMode(dataset),
+                "Min", Statistics.getMin(dataset),
+                "Max", Statistics.getMax(dataset)
+
         );
 
         textMean.setText(meanStr);

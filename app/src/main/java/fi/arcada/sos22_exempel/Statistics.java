@@ -44,15 +44,15 @@ public class Statistics {
     }
 
     // min
-    public static double getMin(ArrayList<DataItem> dataItems) {
+    public static double getMin(ArrayList<Double> dataLista) {
         // Första värdet i vår sorterade arrayList
-        return getSorted(getDataValues(dataItems)).get(0);
+        return getSorted(dataLista).get(0);
     }
 
     // max
-    public static double getMax(ArrayList<DataItem> dataItems) {
+    public static double getMax(ArrayList<Double> dataset) {
         // sista värdet i vår sorterade arrayList
-        return getSorted(getDataValues(dataItems)).get(dataItems.size()-1);
+        return getSorted(dataset).get(dataset.size()-1);
     }
 
     // Medelvärde
@@ -71,7 +71,7 @@ public class Statistics {
         double median;
         if (sorted.size() % 2 == 0) {
             // Om antalet är jämnt, ta medelvärdet av de två mittersta
-            median = sorted.get(mid-1) + sorted.get(mid) / 2;
+            median = (sorted.get(mid-1) + sorted.get(mid)) / 2;
         } else {
             // Om antalet är udda, ta det mittersta värdet
             median = sorted.get(mid);
