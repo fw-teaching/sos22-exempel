@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,8 +12,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,14 +40,24 @@ public class MainActivity extends AppCompatActivity {
         prefEditor.apply();
         // Motsvarande metoder för andra datatyper: getString()/putString() getBoolean()/putBoolean()
 
-        // Hämta ut värdet
+        // Hämta ut värdet och skriv ut i appen
         launchCount = sharedPref.getInt("launchCount", 0);
-
         textOut.setText(String.format("Appen startad %d gånger.", launchCount));
 
+        // Hämta ut ett heltal (som text) och konvertera till int
+        int someNumber = Integer.parseInt(sharedPref.getString("someNumber", "0"));
 
-        textView2.setText(String.format("Välkommen tillbaka %s", "Stranger"));
+        // userName har vi skrivit in i Settings Activity, hämta och skriv ut
+        textView2.setText(String.format("Välkommen tillbaka %s, talet är %d",
+                sharedPref.getString("userName", null),
+                someNumber
 
+        ));
+    }
+
+    public void openSettings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
 
