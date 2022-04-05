@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,67 +17,39 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     // deklarera variabler
-    TextView textMean, textDataOut;
-    EditText editTextName, editValue;
-    RecyclerView recyclerView;
+    TextView textOut, textView2;
+    int launchCount;
 
-    // Vi skapar en arraylist för vår datamängd
-    ArrayList<Double> dataset = new ArrayList<>();
-    ArrayList<DataItem> dataItems = new ArrayList<>();
+    // Deklarera Objekt för preferences
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor prefEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialisera variabler
-        textMean = findViewById(R.id.textViewMean);
-        textDataOut = findViewById(R.id.datasetOut);
-        editTextName = findViewById(R.id.editTextName);
-        editValue = findViewById(R.id.editValue);
-        recyclerView = findViewById(R.id.datasetRecyclerView);
+        // Initialisera view-variabler
+        textOut = findViewById(R.id.textView);
+        textView2 = findViewById(R.id.textView2);
 
-        // Un-commenta denna rad om du behöver ett test-dataset
-        dataItems = Statistics.getSampleDataset(); // ArrayList med testdata (flera DataItem-objekt)
+        // Initialisera sharedPref med this-context (så den vet vilken view den hör till)
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        // Hämta ut det gamla värdet, addera 1, och spara igen
+        prefEditor = sharedPref.edit();
+        prefEditor.putInt("launchCount", sharedPref.getInt("launchCount", 0)+1);
+        prefEditor.apply();
+        // Motsvarande metoder för andra datatyper: getString()/putString() getBoolean()/putBoolean()
 
-        DatasetViewAdapter adapter = new DatasetViewAdapter(dataItems, this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Hämta ut värdet
+        launchCount = sharedPref.getInt("launchCount", 0);
 
-        dataset = Statistics.getDataValues(dataItems); // ArrayList med DataItem-objektens värden
+        textOut.setText(String.format("Appen startad %d gånger.", launchCount));
 
-        // Vi skriver tillfälligt ut vår datamängd
-        String dataOut = "";
-        // Vi skriver ut DataItem-datamängden
-        for (DataItem item: dataItems) {
-            dataOut += item.getName() + ":" + item.getValue() + " ";
-        }
-        textDataOut.setText(dataOut);
+
+        textView2.setText(String.format("Välkommen tillbaka %s", "Stranger"));
 
     }
 
-    public void btnClick(View view) {
-        // För att få den inmatade texten till en double måste vi konvertera med parseDouble()
-        double value = Double.parseDouble(editValue.getText().toString());
-        // Sedan skapar vi ett nytt DataIte-objekt och lägger till vår ArrayList
-        dataItems.add(new DataItem(editTextName.getText().toString(), value));
-    }
 
-    public void calculate(View view) {
-
-        dataset = Statistics.getDataValues(dataItems);
-
-        // %.2f i String.format() avrundar till två decimaler
-        String meanStr = String.format("%s: %.2f\n %s: %.2f\n%s: %.2f\n%s: %.2f\n%s:%.2f\n%s: %.2f",
-                "Medelvärde", Statistics.calcMean(dataset),
-                "Median", Statistics.calcMedian(dataset),
-                "Std.avvikelse", Statistics.calcSD(dataset),
-                "Typvärde", Statistics.calcMode(dataset),
-                "Min", Statistics.getMin(dataset),
-                "Max", Statistics.getMax(dataset)
-
-        );
-
-        textMean.setText(meanStr);
-    }
 }
