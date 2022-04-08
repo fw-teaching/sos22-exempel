@@ -7,30 +7,17 @@ import java.util.Random;
 
 public class Statistics {
 
-    // Metod för att generera en datamängd att testa med
-    public static ArrayList<DataItem> getSampleDataset() {
-        Random rnd = new Random();
-
-        ArrayList<DataItem> sampleData = new ArrayList<>();
-        String[] names = { "Fili", "Kili", "Balin", "Dwalin", "Ori", "Nori", "Dori", "Gloin", "Oin", "Bifur", "Bofur", "Bombur", "Thorin" };
-        double[] ages = { 268.0, 194.0, 364.0, 316.0, 328.0, 194.0, 316.0, 193.0, 298.0, 316.0, 161.0, 276.0, 230.0 };
-
-        for (int i = 0; i < names.length; i++) {
-            //sampleData.add(new DataItem(name, rnd.nextInt(300)+100));
-            sampleData.add(new DataItem(names[i], ages[i]));
-        }
-        return sampleData;
-    }
-
-
 
     // Metod för att skapa skild ArrayList med endast värdena från DataItems
-    public static ArrayList<Double> getDataValues(ArrayList<DataItem> dataItems) {
+    public static ArrayList<Double> getDataValues() {
+
+        double[] temps = { -4.7, -4.8, -1.8, 0.7, 0.1, -6, -7.8, -7, -3.8, -10.6, -10.3, -0.3, 4.8, 2.6, 0.1, 1.2, -1.5, -2.7, 1.8, 0.2, -2, -5.5, -1.3, 2.1, -0.6, -0.9, 1, -0.5, -1.4, -1.6, -5.3, -7.7, -8.2, -9.5, -3.9, -0.4, 1, 0.8, -0.4, 0.6, 1, -1.5, -0.5, 1.4, 1.5, 1.8, 2, 1.1, -0.1, 0.1, -0.7, -0.4, -3, -6.8, 2, 1.5 };
+
         // Skapa ny arraylist för Double-värden
         ArrayList<Double> dataValues = new ArrayList<>();
         // Loopa igenom dataItems och spara endast värdena i den nya arrayListen
-        for (DataItem item: dataItems) {
-            dataValues.add(item.getValue());
+        for (double temp: temps) {
+            dataValues.add(temp);
         }
         return dataValues;
     }
