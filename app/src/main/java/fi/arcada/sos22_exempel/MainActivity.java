@@ -1,25 +1,24 @@
 package fi.arcada.sos22_exempel;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    Double[] dataOne = { -4.7, -4.8, -1.8,  0.7,  0.1, -6.0, -7.8, -7.0, -3.8, -10.6, -10.3, -0.3, 4.8, 2.6,  0.1, 1.2, -1.5, -2.7,  1.8,  0.2, -2.0, -5.5, -1.3,  2.1, -0.6, -0.9,  1.0, -0.5, -1.4, -1.6, -5.3 };
-    Double[] dataTwo = {                   -2.0, -0.3, -1.7, -4.6, -6.9, -6.2, -7.1, -8.2, -7.1, -1.9,  2.4,  2.5, 1.3, -0.1, -1.0, -0.8, -0.2,  0.0, -2.4, -2.9, -1.6,  0.1,  0.2, -0.2, -0.1, -0.3, -1.2, -2.8 };
 
     // deklarera variabler
     LineChart chart;
@@ -35,16 +34,55 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Double> temperatures = Statistics.getDataValues();
         ArrayList<Double> tempsSma = Statistics.sma(temperatures, 3);
+        ArrayList<Double> tempsSma2 = Statistics.sma(temperatures, 10);
 
-        System.out.println(temperatures);
-        System.out.println(tempsSma);
+        // Arraylist som innehåller arraylists
+        ArrayList<ArrayList<Double>> dataSets = new ArrayList<>();
 
-        createSimpleGraph(temperatures);
+        dataSets.add(temperatures);
+        dataSets.add(tempsSma);
+        dataSets.add(tempsSma2);
+
+
+        createMultilineGraph(dataSets);
 
     }
 
+    public void createMultilineGraph(ArrayList<ArrayList<Double>> dataSets) {
+        List<ILineDataSet> dataSeries = new ArrayList<>();
+        List<Entry> entries;
+        //int entryOffset =  0; // var på X ska linjen börja
+
+        String[] labels = { "Temperatur", "SMA", "SMA2", "SMA3" };
+        int[] colors = { Color.BLUE, Color.RED, Color.GREEN, Color.BLACK };
+
+        LineDataSet lineDataSet;
+
+        for (int i = 0; i < dataSets.size(); i++) {
+            // Det dataset vi nu loopar
+            ArrayList<Double> currentDataSet = dataSets.get(i);
+            int entryOffset = dataSets.get(0).size() - currentDataSet.size();
+
+            entries = new ArrayList<Entry>();
+            for (int j = 0; j < currentDataSet.size(); j++) {
+                // OBS i = yttre loopen, j = inre loopen
+                entries.add(new Entry(j+entryOffset, currentDataSet.get(j).floatValue()));
+            }
+
+            lineDataSet = new LineDataSet(entries, labels[i]);
+            lineDataSet.setColor(colors[i]);
+            lineDataSet.setDrawCircles(false);
+            lineDataSet.setDrawValues(false);
+            dataSeries.add(lineDataSet);
+        }
+
+        LineData lineData = new LineData(dataSeries);
+        chart.setData(lineData);
+        chart.invalidate(); // refresh
+    }
 
     public void createSimpleGraph(ArrayList<Double> dataSet) {
+
         List<Entry> entries = new ArrayList<Entry>();
 
         for (int i = 0; i < dataSet.size(); i++) {
