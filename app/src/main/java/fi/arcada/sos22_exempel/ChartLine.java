@@ -9,11 +9,11 @@ import java.util.List;
  *   Samma idé i JavaScript:
  *
  *   const chartLine = {
- *       dataSet = [1,5,3,2,6,3,3,5],
- *       label = "Temperatures",
- *       startOffset = 10,
- *       color = "red",
- *       getLabel = function() {
+ *       dataSet: [1,5,3,2,6,3,3,5],
+ *       label: "Temperatures",
+ *       startOffset: 10,
+ *       color: "red",
+ *       getLabel: function() {
  *           return this.label
  *       }
  *   }
