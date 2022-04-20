@@ -36,17 +36,38 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Double> tempsSma = Statistics.sma(temperatures, 3);
         ArrayList<Double> tempsSma2 = Statistics.sma(temperatures, 10);
 
-        // Arraylist som innehåller arraylists
-        ArrayList<ArrayList<Double>> dataSets = new ArrayList<>();
+        ArrayList<ChartLine> chartLines = new ArrayList<>();
+        chartLines.add(new ChartLine(temperatures, "Temperatur", Color.BLUE, 0));
+        chartLines.add(new ChartLine(tempsSma, "SMA3", Color.GREEN, 3));
+        chartLines.add(new ChartLine(tempsSma2, "SMA10", Color.RED, 10));
 
-        dataSets.add(temperatures);
-        dataSets.add(tempsSma);
-        dataSets.add(tempsSma2);
-
-
-        createMultilineGraph(dataSets);
+        createBetterMultilineGraph(chartLines);
 
     }
+
+    /**
+     * Bättre graf med riktiga klassobjekt som linjer!
+     *
+     * @param chartLines
+     */
+    public void createBetterMultilineGraph(ArrayList<ChartLine> chartLines) {
+        List<ILineDataSet> dataSeries = new ArrayList<>();
+
+        for (ChartLine chartLine: chartLines) {
+            LineDataSet lineDataSet = new LineDataSet(chartLine.getEntries(), chartLine.getLabel());
+
+            lineDataSet.setColor(chartLine.getColor());
+            lineDataSet.setDrawCircles(false);
+            lineDataSet.setDrawValues(false);
+            dataSeries.add(lineDataSet);
+        }
+
+        LineData lineData = new LineData(dataSeries);
+        chart.setData(lineData);
+        chart.invalidate(); // refresh
+
+    }
+
 
     public void createMultilineGraph(ArrayList<ArrayList<Double>> dataSets) {
         List<ILineDataSet> dataSeries = new ArrayList<>();
@@ -81,36 +102,5 @@ public class MainActivity extends AppCompatActivity {
         chart.invalidate(); // refresh
     }
 
-    public void createSimpleGraph(ArrayList<Double> dataSet) {
-
-        List<Entry> entries = new ArrayList<Entry>();
-
-        for (int i = 0; i < dataSet.size(); i++) {
-            entries.add(new Entry(i, dataSet.get(i).floatValue()));
-        }
-
-        LineDataSet lineDataSet = new LineDataSet(entries, "Temperatur");
-        lineDataSet.setDrawCircles(false);
-        lineDataSet.setDrawValues(false);
-        LineData lineData = new LineData(lineDataSet);
-
-        chart.setData(lineData);
-        chart.invalidate(); // refresh
-
-    }
-
-    public void doubler(View view) {
-        try {
-            double inputNumber = Double.parseDouble(textInput.getText().toString());
-            textInput.setText(String.format("%.2f", inputNumber*2));
-
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Skriv ett tal!", Toast.LENGTH_LONG).show();
-            // Kolla också in Snackbar
-        } catch (Exception e) { // Exception tar emot alla slags errors
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-
-    }
 
 }
